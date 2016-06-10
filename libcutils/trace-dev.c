@@ -95,13 +95,13 @@ static bool atrace_is_app_tracing_enabled()
     bool sys_debuggable = false;
     char value[PROPERTY_VALUE_MAX];
     bool result = false;
-
+#if 0
     // Check whether the system is debuggable.
     property_get("ro.debuggable", value, "0");
     if (value[0] == '1') {
         sys_debuggable = true;
     }
-
+#endif
     if (sys_debuggable || atrace_is_debuggable) {
         // Check whether tracing is enabled for this process.
         FILE * file = fopen("/proc/self/cmdline", "r");
@@ -173,6 +173,7 @@ void atrace_update_tags()
 
 static void atrace_init_once()
 {
+#if 0
     atrace_marker_fd = open("/sys/kernel/debug/tracing/trace_marker", O_WRONLY);
     if (atrace_marker_fd == -1) {
         ALOGE("Error opening trace file: %s (%d)", strerror(errno), errno);
@@ -183,6 +184,10 @@ static void atrace_init_once()
     atrace_enabled_tags = atrace_get_property();
 
 done:
+#else
+    atrace_marker_fd == -1;
+    atrace_enabled_tags = 0;
+#endif
     atomic_store_explicit(&atrace_is_ready, true, memory_order_release);
 }
 
