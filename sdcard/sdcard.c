@@ -282,8 +282,8 @@ static void release_node_locked(struct node* node)
             memset(node, 0xfc, sizeof(*node));
             free(node);
         }
-    } else {
-        ERROR("Zero refcnt %p\n", node);
+//     } else {
+//         ERROR("Zero refcnt %p\n", node);
     }
 }
 
@@ -704,9 +704,9 @@ static void fuse_reply(struct fuse *fuse, __u64 unique, void *data, int len)
     vec[1].iov_len = len;
 
     res = writev(fuse->fd, vec, 2);
-    if (res < 0) {
-        ERROR("*** REPLY FAILED *** %d\n", errno);
-    }
+//     if (res < 0) {
+//         ERROR("*** REPLY FAILED *** %d\n", errno);
+//     }
 }
 
 static int fuse_reply_entry(struct fuse* fuse, __u64 unique,
@@ -780,9 +780,9 @@ static void fuse_notify_delete(struct fuse* fuse, const __u64 parent,
 
     res = writev(fuse->fd, vec, 3);
     /* Ignore ENOENT, since other views may not have seen the entry */
-    if (res < 0 && errno != ENOENT) {
-        ERROR("*** NOTIFY FAILED *** %d\n", errno);
-    }
+//     if (res < 0 && errno != ENOENT) {
+//         ERROR("*** NOTIFY FAILED *** %d\n", errno);
+//     }
 }
 
 static int handle_lookup(struct fuse* fuse, struct fuse_handler* handler,
